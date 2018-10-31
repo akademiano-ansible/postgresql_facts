@@ -1,0 +1,14 @@
+---
+- name: gather facts from postgresql server
+  setup:
+    gather_subset:
+      - '!all'
+      - '!min'
+      - network
+  delegate_to: "{{groups[postgresql_group][0]}}"
+  delegate_facts: True
+
+- name: set postgresql server address register
+  set_fact:
+    postgresql_network_address: "{{ hostvars[groups[postgresql_group][0]][postgresql_network_interface][postgresql_network_address_family]['address'] }}"
+    cacheable: true
