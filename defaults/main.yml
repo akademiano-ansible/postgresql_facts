@@ -1,6 +1,6 @@
 ---
 # defaults file for mrdatamapper.akademiano_prepare_zabbix_agent
 postgresql_group: PostgresqlServer
-postgresql_network_interface: ansible_eth1
+postgresql_network_interface: ansible_eth0
 postgresql_network_address_family: ipv4
 

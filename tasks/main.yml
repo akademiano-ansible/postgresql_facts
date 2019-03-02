@@ -1,14 +1,20 @@
 ---
+
+- name: set postgresql server inventory name for delegation
+  set_fact:
+    postgresql_delegated_host: "{{groups[postgresql_group][0]}}"
+    cacheable: true
+
 - name: gather facts from postgresql server
   setup:
     gather_subset:
       - '!all'
       - '!min'
       - network
-  delegate_to: "{{groups[postgresql_group][0]}}"
+  delegate_to: "{{ postgresql_delegated_host }}"
   delegate_facts: True
 
 - name: set postgresql server address register
   set_fact:
-    postgresql_network_address: "{{ hostvars[groups[postgresql_group][0]][postgresql_network_interface][postgresql_network_address_family]['address'] }}"
+    postgresql_network_address: "{{ hostvars[postgresql_delegated_host][postgresql_network_interface][postgresql_network_address_family]['address'] }}"
     cacheable: true
